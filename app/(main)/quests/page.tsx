@@ -1,33 +1,30 @@
-import Image from "next/image";
-import { redirect } from "next/navigation";
+import Image from "next/image"
+import { redirect } from "next/navigation"
 
-import { FeedWrapper } from "@/components/feed-wrapper";
-import { UserProgress } from "@/components/user-progress";
-import { StickyWrapper } from "@/components/sticky-wrapper";
-import { getUserProgress, getUserSubscription } from "@/db/queries";
-import { Progress } from "@/components/ui/progress";
-import { Promo } from "@/components/promo";
-import { quests } from "@/constants";
+import { FeedWrapper } from "@/components/feed-wrapper"
+import { UserProgress } from "@/components/user-progress"
+import { StickyWrapper } from "@/components/sticky-wrapper"
+import { getUserProgress, getUserSubscription } from "@/db/queries"
+import { Progress } from "@/components/ui/progress"
+import { Promo } from "@/components/promo"
+import { quests } from "@/constants"
 
 const QuestsPage = async () => {
-  const userProgressData = getUserProgress();
-  const userSubscriptionData = getUserSubscription();
+  const userProgressData = getUserProgress()
+  const userSubscriptionData = getUserSubscription()
 
-  const [
-    userProgress,
-    userSubscription,
-  ] = await Promise.all([
+  const [userProgress, userSubscription] = await Promise.all([
     userProgressData,
     userSubscriptionData,
-  ]);
+  ])
 
   if (!userProgress || !userProgress.activeCourse) {
-    redirect("/courses");
+    redirect("/courses")
   }
 
-  const isPro = !!userSubscription?.isActive;
+  const isPro = !!userSubscription?.isActive
 
-  return ( 
+  return (
     <div className="flex flex-row-reverse gap-[48px] px-6">
       <StickyWrapper>
         <UserProgress
@@ -36,18 +33,11 @@ const QuestsPage = async () => {
           points={userProgress.points}
           hasActiveSubscription={isPro}
         />
-        {!isPro && (
-          <Promo />
-        )}
+        {!isPro && <Promo />}
       </StickyWrapper>
       <FeedWrapper>
         <div className="w-full flex flex-col items-center">
-          <Image
-            src="/quests.svg"
-            alt="Quests"
-            height={90}
-            width={90}
-          />
+          <Image src="/quests.svg" alt="Quests" height={90} width={90} />
           <h1 className="text-center font-bold text-neutral-800 text-2xl my-6">
             Quests
           </h1>
@@ -56,7 +46,7 @@ const QuestsPage = async () => {
           </p>
           <ul className="w-full">
             {quests.map((quest) => {
-              const progress = (userProgress.points / quest.value) * 100;
+              const progress = (userProgress.points / quest.value) * 100
 
               return (
                 <div
@@ -82,7 +72,7 @@ const QuestsPage = async () => {
         </div>
       </FeedWrapper>
     </div>
-  );
-};
- 
-export default QuestsPage;
+  )
+}
+
+export default QuestsPage

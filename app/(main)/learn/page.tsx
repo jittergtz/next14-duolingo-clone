@@ -49,7 +49,7 @@ const LearnPage = async () => {
   const isPro = !!userSubscription?.isActive;
 
   return (
-    <div className="flex flex-row-reverse gap-[48px] px-6">
+    <div className="flex flex-row-reverse gap-[48px] px-6 bg-gradient-to-b from-green-600 to-green-200">
       <StickyWrapper>
         <UserProgress
           activeCourse={userProgress.activeCourse}
@@ -65,7 +65,7 @@ const LearnPage = async () => {
       <FeedWrapper>
         <Header title={userProgress.activeCourse.title} />
         {units.map((unit) => (
-          <div key={unit.id} className="mb-10">
+          <div key={unit.id} className="my-10 ">
             <Unit
               id={unit.id}
               order={unit.order}
